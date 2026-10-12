@@ -1,1 +1,78 @@
 
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Duelo LIVE</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080719;color:white;font-family:Arial;text-align:center}
+header{padding:22px 8px;font-size:30px;font-weight:900}
+header span{color:#ffd21f}
+.arena{max-width:500px;min-height:85vh;margin:auto;padding:18px 12px;background:linear-gradient(160deg,#191039,#40206e,#132d7a);border:5px solid #25283e;border-radius:35px}
+h2{font-size:19px;color:#ffe02c}
+.placar{display:flex;gap:12px;margin:22px 0}
+.time{flex:1;min-width:0}
+.nome{width:100%;padding:10px 2px;background:#15192b;color:white;border:1px solid #555;border-radius:8px;text-align:center;font-weight:bold}
+.pontos{font-size:42px;font-weight:900;margin:15px 0}
+.barra{height:13px;background:#080916;border-radius:20px;overflow:hidden}
+.progresso{height:100%;width:0%;transition:width .25s}
+.vermelho .progresso{background:#ff244f}
+.verde .progresso{background:#18e66b}
+button{width:100%;border:2px solid white;border-radius:12px;padding:14px 4px;font-size:17px;font-weight:900;margin-top:12px;color:white}
+.vermelho button{background:#e91d42}
+.verde button{background:#078d42}
+.versus{font-weight:900;color:#ffdf24;align-self:center}
+#status{padding:18px 4px;font-weight:bold}
+.reset{max-width:220px;background:#20243b}
+</style>
+</head>
+<body>
+<header>⚔ DUELO <span>LIVE</span></header>
+<main class="arena">
+<h2>🔥 LUTA ESPECIAL 🔥</h2>
+<div class="placar">
+<section class="time vermelho">
+<input id="nome1" class="nome" value="TIME 1">
+<div id="p1" class="pontos">0</div>
+<div class="barra"><div id="b1" class="progresso"></div></div>
+<button onclick="somar(0,1)">DIGITE 13<br>+1 PONTO</button>
+<button onclick="somar(0,10)">+10 PONTOS</button>
+</section>
+<div class="versus">VS</div>
+<section class="time verde">
+<input id="nome2" class="nome" value="TIME 2">
+<div id="p2" class="pontos">0</div>
+<div class="barra"><div id="b2" class="progresso"></div></div>
+<button onclick="somar(1,1)">DIGITE 22<br>+1 PONTO</button>
+<button onclick="somar(1,10)">+10 PONTOS</button>
+</section>
+</div>
+<div id="status">A BATALHA VAI COMEÇAR!</div>
+<div style="font-size:70px">🥊</div>
+<p>PLACAR MANUAL</p>
+<button class="reset" onclick="zerar()">ZERAR PLACAR</button>
+</main>
+<script>
+let pontos=[0,0];
+function atualizar(){
+ document.getElementById('p1').textContent=pontos[0];
+ document.getElementById('p2').textContent=pontos[1];
+ let total=pontos[0]+pontos[1];
+ document.getElementById('b1').style.width=(total?pontos[0]/total*100:50)+'%';
+ document.getElementById('b2').style.width=(total?pontos[1]/total*100:50)+'%';
+ let n1=document.getElementById('nome1').value||'TIME 1';
+ let n2=document.getElementById('nome2').value||'TIME 2';
+ document.getElementById('status').textContent=pontos[0]===pontos[1]?'⚔ EMPATE!':pontos[0]>pontos[1]?'🔥 '+n1+' ESTÁ VENCENDO!':'🔥 '+n2+' ESTÁ VENCENDO!';
+}
+function somar(lado,valor){pontos[lado]+=valor;atualizar()}
+function zerar(){pontos=[0,0];atualizar()}
+document.getElementById('nome1').addEventListener('input',atualizar);
+document.getElementById('nome2').addEventListener('input',atualizar);
+atualizar();
+</script>
+</body>
+</html>
